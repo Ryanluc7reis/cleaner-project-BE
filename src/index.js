@@ -2,11 +2,16 @@ import express from "express";
 import bodyParser from "body-parser";
 import cors from "cors";
 import mongoose from "mongoose";
+import dotenv from "dotenv";
+dotenv.config(); 
 
 import userRouter from "./controllers/user/signup.js";
 import userRouter2 from "./controllers/user/login.js";
 
-mongoose.connect("mongodb+srv://ryanlucasfrfrfr:y0jqxiPgY3tyu2aq@cluster-cleaner-project.07fjt4v.mongodb.net/ryanlucasfrfrfr?retryWrites=true&w=majority", {
+
+const MONGO_URI = process.env.MONGODB_URI
+
+mongoose.connect(MONGO_URI, {
   useUnifiedTopology: true,
   useNewUrlParser: true
 })
