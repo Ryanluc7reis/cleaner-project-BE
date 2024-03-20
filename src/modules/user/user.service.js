@@ -5,7 +5,8 @@ export const signupUser = async (body) => {
   try {
     const user = {
       ...body,
-      password: hashPassword(body.password)
+      password: hashPassword(body.password),
+      userType: 'user'
     }
     const dbUser = await User.create(user)
     return dbUser
@@ -13,11 +14,24 @@ export const signupUser = async (body) => {
     throw err
   }
 }
+export const signupCleaner = async (body) => {
+  try {
+    const cleaner = {     
+      ...body,
+      password: hashPassword(body.password),
+      userType: 'cleaner'
+    }
+    const dbCleaner = await User.create(cleaner)
+    return dbCleaner
+  } catch (err) {
+    throw err
+  }
+}
 
-  export const loginUser = async (body) => {
+  export const loginUserAndCleaner = async (body) => {
     try {
       const user = await User.findOne({
-        $or: [{ email: body.userOrEmail }, { user: body.userOrEmail }]
+        $or: [{ email: body.userOrEmail }, { user: body.userOrEmail }],
       })
   
       if (!user) throw new Error('not found')
