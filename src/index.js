@@ -5,9 +5,8 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 dotenv.config(); 
 
-import UserSignup from "./controllers/user/signup.js";
+import UserAndCleanerSignup from "./controllers/user/signup.js";
 import UserAndCleanerLogin from "./controllers/user/login.js";
-import CleanerSignup from "./controllers/user/signupAscleaner.js"
 
 
 const MONGO_URI = process.env.MONGODB_URI
@@ -31,8 +30,7 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.use('/user', UserSignup);
+app.use('/user', UserAndCleanerSignup);
 app.use('/user', UserAndCleanerLogin);
-app.use('/user', CleanerSignup);
 
 app.listen(port, () => console.log(`App rodando em http://localhost:${port}`));
