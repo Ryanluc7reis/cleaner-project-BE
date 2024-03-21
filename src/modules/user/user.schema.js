@@ -19,7 +19,7 @@ import Joi from 'joi';
     .min(6).message('O campo "senha" precisa ter no mínimo {{#limit}} caracteres.'),
     number: Joi.number().required().min(1)
 });
- export const loginUserSchema = Joi.object({
+ export const loginSchema = Joi.object({
     userOrEmail: Joi.string().required(),
     password: Joi.string()
       .required()
