@@ -18,7 +18,7 @@ router.post('/createCard',verifyToken, celebrate({ body: createCardSchema }), as
 });
 router.get('/findCard',verifyToken,  async (req, res) => {
   try {     
-      const card = await findOneCard( req.user)
+      const card = await findOneCard(req.user)
       res.status(200).send(card)
     } catch (err) {
       res.status(400).send(err.message)

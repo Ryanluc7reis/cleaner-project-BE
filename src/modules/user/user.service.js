@@ -44,4 +44,16 @@ export const signupCleaner = async (body) => {
       throw err
     }
   }
+  export const findCleaner = async (user) => {
+    try {
+      const userDB = await User.findOne({
+        user: user,
+        userType: 'cleaner'
+      })
+      if(!userDB) throw new Error('not found cleaner')
+
+    } catch (err) {
+      throw err
+    }
+  }
  
