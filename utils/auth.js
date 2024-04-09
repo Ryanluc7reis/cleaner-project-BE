@@ -26,7 +26,7 @@ export const verifyToken = (req, res, next) => {
     if (err) {
       return res.status(403).json({ message: 'Falha ao autenticar o token' });
     } else {
-      req.user = decoded.user;
+      req.user = decoded.user
       next(); 
     }
   });
