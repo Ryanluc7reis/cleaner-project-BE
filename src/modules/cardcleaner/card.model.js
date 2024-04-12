@@ -7,6 +7,7 @@ const CardSchema = new mongoose.Schema({
     rating: { type: String, required: true },
     experience: { type: String, required: true },
     amountCleaning : { type: Number, required: true },
+    region : { type: String, required: true },
     creator: { type: String, required: true, ref: User }
 });
 

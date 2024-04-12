@@ -7,6 +7,7 @@ export const createCard = async (body, user) => {
     rating: '-',
     experience: body.experience,
     amountCleaning: body.amountCleaning,
+    region: body.region,
     creator: user
   })
 }

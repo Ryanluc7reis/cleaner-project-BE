@@ -8,4 +8,5 @@ export const createCardSchema = Joi.object({
     price: Joi.string().required(),
     experience: Joi.string().required().max(256),
     amountCleaning: Joi.number().required(),
+    region: Joi.string().required().max(25)
   })
