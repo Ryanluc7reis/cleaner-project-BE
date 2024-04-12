@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { celebrate } from 'celebrate';
+import { celebrate, Segments } from 'celebrate';
 
 import { createCard, findOneCard, getCards } from '../../modules/cardcleaner/card.service';
 import { createCardSchema } from '../../modules/cardcleaner/card.schema';
@@ -8,13 +8,14 @@ import { verifyToken } from '../../../utils/auth';
 
 const router = Router();
 
-router.post('/createCard',verifyToken, celebrate({ body: createCardSchema }), async (req, res) => {
+router.post('/createCard',verifyToken, celebrate({ [Segments.BODY]: createCardSchema }), async (req, res) => {
     try {     
         const newCard = await createCard(req.body, req.user)
         res.status(201).send(newCard)
       } catch (err) {
         res.status(400).send(err.message)
       }
+      next(err)
 });
 router.get('/findCard',verifyToken,  async (req, res) => {
   try {     
@@ -32,6 +33,15 @@ router.get('/getCards',async (req, res) => {
     return res.status(500).send(err.message)
   }
 })
-
+router.use((err, req, res, next) => {
+  if (err.joi) {
+    return res.status(400).json({
+      error: 'Erro de validação',
+      details: err.joi.details.map(detail => detail.message)
+    });
+  }
+  console.error(err);
+  res.status(500).send('Erro interno do servidor');
+});
 
 export default router;
