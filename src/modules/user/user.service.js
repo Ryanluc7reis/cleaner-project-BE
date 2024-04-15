@@ -1,5 +1,6 @@
 import User from "./user.model"
 import { hashPassword, compareSync } from '../../../utils/bcrypt'
+import { generateAccessToken } from "../../../utils/auth"
 
 export const signupUser = async (body) => {
   try {
@@ -38,9 +39,21 @@ export const signupCleaner = async (body) => {
       const passwordIsCorrect = compareSync(body.password, user.password)
       if (!passwordIsCorrect) throw new Error('password incorrect')
   
-      return user
+      return generateAccessToken({ user: body.userOrEmail },{ email: body.userOrEmail })
     } catch (err) {
       throw err
     }
   }
-  
+  export const findCleaner = async (user) => {
+    try {
+      const userDB = await User.findOne({
+        user: user,
+        userType: 'cleaner'
+      })
+      if(!userDB) throw new Error('not found cleaner')
+
+    } catch (err) {
+      throw err
+    }
+  }
+ 
