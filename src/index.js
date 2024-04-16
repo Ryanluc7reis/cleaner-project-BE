@@ -42,7 +42,7 @@ app.use('/user', UserAndCleanerSignup);
 app.use('/user', UserAndCleanerLogin);
 app.use('/user', ValidateSession)
 app.use('/user', UserLogout)
-app.use(CardCleaner)
+app.use('/cleaner', CardCleaner)
 app.use('/user', ValidadeUser)
 
 app.listen(port, () => console.log(`App rodando em http://localhost:${port}`));

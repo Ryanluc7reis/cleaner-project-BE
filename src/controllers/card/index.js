@@ -1,8 +1,8 @@
 import { Router } from 'express';
 import { celebrate, Segments } from 'celebrate';
 
-import { createCard, findOneCard, getCards } from '../../modules/cardcleaner/card.service';
-import { createCardSchema } from '../../modules/cardcleaner/card.schema';
+import { createCard, findOneCard, getCards, getOneCard, editCard } from '../../modules/cardcleaner/card.service';
+import { createCardSchema, editCardSchema } from '../../modules/cardcleaner/card.schema';
 import { verifyToken } from '../../../utils/auth';
 
 
@@ -14,9 +14,21 @@ router.post('/createCard',verifyToken, celebrate({ [Segments.BODY]: createCardSc
         res.status(201).send(newCard)
       } catch (err) {
         res.status(400).send(err.message)
+        next(err)
       }
-      next(err)
+      
 });
+router.patch('/editCard',verifyToken, celebrate({ [Segments.BODY]: editCardSchema }), async (req, res) => {
+  try {
+    
+    const refreshCard = await editCard(req.body, req.user)
+    if (refreshCard) return res.status(200).send(refreshCard)
+
+    return res.status(400).send('card not found')
+  } catch (err) {
+    return res.status(500).send(err.message)
+  }
+})
 router.get('/findCard',verifyToken,  async (req, res) => {
   try {     
       const card = await findOneCard(req.user)
@@ -25,9 +37,17 @@ router.get('/findCard',verifyToken,  async (req, res) => {
       res.status(400).send(err.message)
     }
 });
-router.get('/getCards',async (req, res) => {
+router.get('/getOneCard',  async (req, res) => {
+  try {     
+      const card = await getOneCard({ id: req.query.id })
+      res.status(200).send(card)
+    } catch (err) {
+      res.status(400).send(err.message)
+    }
+});
+router.get('/getCards', async (req, res) => {
   try {
-    const cards = await getCards()
+    const cards = await getCards(req.region)
     res.status(200).send(cards)
   } catch (err) {
     return res.status(500).send(err.message)
