@@ -17,8 +17,24 @@ import Joi from 'joi';
     email: Joi.string().email({ tlds: { allow: false } }).required().max(100).message('O campo "email" pode ter no máximo {{#limit}} caracteres.'),
     password: Joi.string().required().max(50).message('O campo "senha" pode ter no máximo {{#limit}} caracteres.')
     .min(6).message('O campo "senha" precisa ter no mínimo {{#limit}} caracteres.'),
+    address: Joi.string().required().max(50),
     number: Joi.number().required().min(1)
 });
+export const editUserSchema = Joi.object({
+    id: Joi.objectId().required(),
+    fullName: Joi.string().required().max(50),
+    user: Joi.string().required().max(30),
+    email: Joi.string().email({ tlds: { allow: false } }).required().max(100),
+    password: Joi.string().required(),
+    address:Joi.string().required(),
+    number: Joi.number().required().min(1)
+  })
+  export const verifyPasswordSchema = Joi.object({
+    password: Joi.string().required(),
+  })
+
+
+ 
  export const loginSchema = Joi.object({
     userOrEmail: Joi.string().required(),
     password: Joi.string()
