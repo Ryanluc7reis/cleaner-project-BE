@@ -9,7 +9,7 @@ const login = Router();
 login.post('/login', celebrate({ [Segments.BODY]: loginSchema }), async (req, res) => {
   try {
       const token = await loginUserAndCleaner(req.body);   
-      res.json({auth: true , token})
+      res.json({auth: true, token})
   } catch (err) {
     return res.status(400).send(err.message);
   }
