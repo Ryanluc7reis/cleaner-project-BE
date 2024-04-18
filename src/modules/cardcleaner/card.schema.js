@@ -25,6 +25,5 @@ export const createCardSchema = Joi.object({
     cleaning:  Joi.string().required(),
     cleaning2:  Joi.string().required(),
     cleaning3:  Joi.string().required()
-  
   })
  

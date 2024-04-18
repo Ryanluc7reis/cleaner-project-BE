@@ -25,8 +25,10 @@ export const verifyToken = (req, res, next) => {
   verify(token, AUTH_SECRET, (err, decoded) => {
     if (err) {
       return res.status(403).json({ message: 'Falha ao autenticar o token' });
-    } else {
-      req.user = decoded.user
+    } else {   
+      req.user = decoded.user  
+      req.userId = decoded.userId
+   
       next(); 
     }
   });

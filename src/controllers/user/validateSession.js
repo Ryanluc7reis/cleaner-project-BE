@@ -6,7 +6,7 @@ const sessionVerification = Router();
 
 sessionVerification.get('/verify-session', verifyToken, async (req, res) => {
   try { 
-    return res.status(200).send(req.user);
+    return res.status(200).send({ user: req.user, userId: req.userId, email: req.email });
   } catch (error) {
     return res.status(401).send({ error: 'Sessão inválida' });
   }
