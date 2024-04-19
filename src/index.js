@@ -12,6 +12,7 @@ import ValidateSession from "./controllers/user/validateSession.js"
 import UserLogout from './controllers/user/logout.js'
 import ValidadeUser from './controllers/user/findCleaner.js'
 import CardCleaner from './controllers/card/index.js'
+import IndexUser from './controllers/user/index.js'
 
 const MONGO_URI = process.env.MONGODB_URI
 
@@ -44,5 +45,6 @@ app.use('/user', ValidateSession)
 app.use('/user', UserLogout)
 app.use('/cleaner', CardCleaner)
 app.use('/user', ValidadeUser)
+app.use('/user', IndexUser)
 
 app.listen(port, () => console.log(`App rodando em http://localhost:${port}`));

@@ -6,7 +6,7 @@ import { verifyToken } from '../../../utils/auth';
 
 const userVerify = Router();
 
-userVerify.get('/verify-user',verifyToken, async (req, res) => {
+userVerify.get('/verify-cleaner',verifyToken, async (req, res) => {
   try { 
     await findCleaner(req.user)
     return res.status(200).send({ ok: 'cleaner encontrado' });
