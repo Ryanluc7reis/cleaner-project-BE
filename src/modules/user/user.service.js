@@ -59,26 +59,38 @@ export const signupCleaner = async (body) => {
     }
   }
   export const editUser = async (body) => {
-   try{
-      const user = await User.findOneAndUpdate({
-        _id: body.id,
-
-      },{
-        fullName: body.fullName,
-        user: body.user,
-        email: body.email,
-        password: hashPassword(body.password),
-        address: body.address,
-        number: body.number,
-        
-      },{
-
-        new: true 
-      })
-      return user
-   } catch (err) { 
-    throw err
-   }
+    try {
+      const user = await User.findById(body.id);
+  
+      if (!user) {
+        throw new Error('Usuário não encontrado');
+      }
+  
+      if (body.password && body.password !== user.password) {
+      
+        body.password = hashPassword(body.password);
+      } else {
+      
+        body.password = user.password;
+      }
+         
+      const updatedUser = await User.findOneAndUpdate(
+        { _id: body.id },
+        {
+          fullName: body.fullName,
+          user: body.user,
+          email: body.email,
+          password: body.password,
+          address: body.address,
+          number: body.number,
+        },
+        { new: true }
+      );
+  
+      return updatedUser;
+    } catch (err) {
+      throw err;
+    }
    
   }
    export const verifyPassword = async (body, user) => {
