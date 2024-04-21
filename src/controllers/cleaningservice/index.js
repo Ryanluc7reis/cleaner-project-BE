@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { celebrate, Segments } from 'celebrate';
 
-import { createService } from '../../modules/cleaningservices/service.service';
+import { createService, getServicesCleaner, getServicesUser } from '../../modules/cleaningservices/service.service';
 import { createServiceSchema } from '../../modules/cleaningservices/service.schema';
 import { verifyToken } from '../../../utils/auth';
 
@@ -17,6 +17,26 @@ router.post('/createService',verifyToken, celebrate({ [Segments.BODY]: createSer
      
       }
       
+});
+router.get('/getService-cleaner', verifyToken,  async (req, res) => {
+  try {     
+      const service = await getServicesCleaner(req.user)
+      res.status(200).send(service)
+    } catch (err) {
+      res.status(400).send({message: 'Serviço não encontrado'})
+   
+    }
+    
+});
+router.get('/getService-user', verifyToken,  async (req, res) => {
+  try {     
+      const service = await getServicesUser(req.user)
+      res.status(200).send(service)
+    } catch (err) {
+      res.status(400).send({message: 'Serviço não encontrado'})
+   
+    }
+    
 });
 router.use((err, req, res, next) => {
   if (err.joi) {

@@ -23,3 +23,40 @@ export const createService = async (body, user) => {
   }
  
 }
+export const getServicesCleaner = async (user) => {
+  try {
+    const service = await Service.findOne({ cleaner: user })
+    if (!service ) {
+      throw new Error('Serviço não encontrado');
+    }
+    if (user && user !== service.cleaner) {
+      
+      throw new Error('Serviço não encontrado');
+    } else {
+    
+     return service
+    }
+  } catch (err) {
+    throw err
+  }
+ 
+}
+export const getServicesUser = async (user) => {
+  try {
+    const service = await Service.findOne({ requester: user })
+    if (!service ) {
+      throw new Error('Serviço não encontrado');
+    }
+    if (user && user !== service.requester) {
+      
+      throw new Error('Serviço não encontrado');
+    } else {
+    
+     return service
+    }
+  } catch (err) {
+    throw err
+  }
+ 
+}
+
