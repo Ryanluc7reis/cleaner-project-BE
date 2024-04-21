@@ -22,9 +22,13 @@ export const findOneCard = async (user) => {
 }
 export const getOneCard = async (body) => {
   return await Card.findOne({
-    _id: body.id
-  })
-}
+    $or: [
+      { _id: body.id },
+      { _id: body.cardId }
+    ]
+  });
+};
+
 export const getCards = async (limit = 10) => {
   return await Card.find().limit(limit)
 }
