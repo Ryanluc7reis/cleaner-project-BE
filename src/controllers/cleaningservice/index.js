@@ -10,7 +10,7 @@ const router = Router();
 
 router.post('/createService',verifyToken, celebrate({ [Segments.BODY]: createServiceSchema }), async (req, res) => {
     try {     
-        const newService = await createService(req.body, req.user)
+        const newService = await createService(req.body, req.fullName)
         res.status(201).send(newService)
       } catch (err) {
         res.status(400).send(err.message)
@@ -20,7 +20,7 @@ router.post('/createService',verifyToken, celebrate({ [Segments.BODY]: createSer
 });
 router.get('/getService-cleaner', verifyToken,  async (req, res) => {
   try {     
-      const service = await getServicesCleaner(req.user)
+      const service = await getServicesCleaner(req.fullName)
       res.status(200).send(service)
     } catch (err) {
       res.status(400).send({message: 'Serviço não encontrado'})
@@ -30,7 +30,7 @@ router.get('/getService-cleaner', verifyToken,  async (req, res) => {
 });
 router.get('/getService-user', verifyToken,  async (req, res) => {
   try {     
-      const service = await getServicesUser(req.user)
+      const service = await getServicesUser(req.fullName)
       res.status(200).send(service)
     } catch (err) {
       res.status(400).send({message: 'Serviço não encontrado'})

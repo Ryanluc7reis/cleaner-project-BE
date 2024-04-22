@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { celebrate, Segments } from 'celebrate';
 
-import { editUser,getUser , verifyPassword} from '../../modules/user/user.service';
+import { editUser, getUser, verifyPassword, getCleanerName} from '../../modules/user/user.service';
 import { editUserSchema, verifyPasswordSchema } from '../../modules/user/user.schema';
 import { verifyToken } from '../../../utils/auth';
 
@@ -30,6 +30,15 @@ router.post('/verify-password', verifyToken, celebrate({ [Segments.BODY]: verify
 });
 
 
+router.post('/findCleanerName', verifyToken, async (req, res) => {
+  try {    
+   
+   const user = await  getCleanerName(req.body)
+      res.status(200).send(user)
+    } catch (err) {
+      res.status(400).send(err.message)
+    }
+});
 router.get('/findUser', verifyToken, async (req, res) => {
   try {    
    
