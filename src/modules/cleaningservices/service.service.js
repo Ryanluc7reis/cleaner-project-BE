@@ -1,9 +1,9 @@
 import Service from './service.model'
 import User from '../user/user.model'
 
-export const createService = async (body, user) => {
+export const createService = async (body, fullName) => {
   try{
-    const cleaner = await User.findOne({ user: body.cleaner})
+    const cleaner = await User.findOne({ fullName: body.cleaner})
     if (!cleaner) {
       throw new Error('Cleaner não encontrado');
     }
@@ -14,7 +14,9 @@ export const createService = async (body, user) => {
       totalCost : body.totalCost,
       createdDate: new Date(),
       serviceDate: body.serviceDate,
-      requester: user,
+      address: body.address,
+      number: body.number,
+      requester: fullName,
       cleaner: body.cleaner
     })
     return service
@@ -23,13 +25,13 @@ export const createService = async (body, user) => {
   }
  
 }
-export const getServicesCleaner = async (user) => {
+export const getServicesCleaner = async (fullName) => {
   try {
-    const service = await Service.findOne({ cleaner: user })
+    const service = await Service.findOne({ cleaner: fullName })
     if (!service ) {
       throw new Error('Serviço não encontrado');
     }
-    if (user && user !== service.cleaner) {
+    if (fullName && fullName !== service.cleaner) {
       
       throw new Error('Serviço não encontrado');
     } else {
@@ -41,13 +43,13 @@ export const getServicesCleaner = async (user) => {
   }
  
 }
-export const getServicesUser = async (user) => {
+export const getServicesUser = async (fullName) => {
   try {
-    const service = await Service.findOne({ requester: user })
+    const service = await Service.findOne({ requester: fullName })
     if (!service ) {
       throw new Error('Serviço não encontrado');
     }
-    if (user && user !== service.requester) {
+    if (fullName && fullName !== service.requester) {
       
       throw new Error('Serviço não encontrado');
     } else {
