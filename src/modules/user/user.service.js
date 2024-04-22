@@ -40,7 +40,13 @@ export const signupCleaner = async (body) => {
       if (!passwordIsCorrect) throw new Error('password incorrect')
       
  
-    const token = generateAccessToken({ user: body.userOrEmail,  userId: user.id });
+    const token = generateAccessToken(
+      { 
+        user: body.userOrEmail,
+        userId: user.id ,
+        fullName: user.fullName,
+        email: user.email
+      });
      return token
     } catch (err) {
       throw err
@@ -53,7 +59,21 @@ export const signupCleaner = async (body) => {
         userType: 'cleaner'
       })
       if(!userDB) throw new Error('not found cleaner')
+      return userDB
+    } catch (err) {
+      throw err
+    }
 
+  }
+  export const getCleanerName = async (body) => {
+    try {
+      const userDB = await User.findOne({
+
+      $or: [{user: body.cleanerName, }, { fullName: body.cleanerName }],
+
+      })
+      if(!userDB) throw new Error('not found user')
+      return userDB
     } catch (err) {
       throw err
     }

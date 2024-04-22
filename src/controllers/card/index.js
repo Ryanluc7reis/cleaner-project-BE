@@ -37,14 +37,15 @@ router.get('/findCard',verifyToken,  async (req, res) => {
       res.status(400).send(err.message)
     }
 });
-router.get('/getOneCard',  async (req, res) => {
-  try {     
-      const card = await getOneCard({ id: req.query.id })
-      res.status(200).send(card)
-    } catch (err) {
-      res.status(400).send(err.message)
-    }
+router.get('/getOneCard', async (req, res) => {
+  try {
+    const card = await getOneCard({ id: req.query.id, cardId: req.query.cardId });
+    res.status(200).send(card);
+  } catch (err) {
+    res.status(400).send(err.message);
+  }
 });
+
 router.get('/getCards', async (req, res) => {
   try {
     const cards = await getCards(req.region)

@@ -28,6 +28,9 @@ export const verifyToken = (req, res, next) => {
     } else {   
       req.user = decoded.user  
       req.userId = decoded.userId
+      req.email = decoded.email
+      req.fullName = decoded.fullName
+      console.log(decoded)
    
       next(); 
     }
