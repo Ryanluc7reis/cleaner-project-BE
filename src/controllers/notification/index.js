@@ -1,8 +1,8 @@
 import { Router } from 'express';
 import { celebrate, Segments } from 'celebrate';
 
-import { createNotification } from '../../modules/notifications/notification.service';
-import { createNotificationSchema } from '../../modules/notifications/notification.schema';
+import { createNotification, getNotifications, deleteNotification } from '../../modules/notifications/notification.service';
+import { createNotificationSchema, deleteNotificationSchema } from '../../modules/notifications/notification.schema';
 import { verifyToken } from '../../../utils/auth';
 
 
@@ -18,5 +18,27 @@ router.post('/createNotification',verifyToken, celebrate({ [Segments.BODY]: crea
         res.status(500).send(err.message)
      
       }    
+});
+router.get('/getNotifications', verifyToken,  async (req, res) => {
+  try {     
+      const notifications = await getNotifications(req.fullName)
+      if (notifications) return res.status(200).send(notifications)
+
+      return res.status(400).send('notification not created')
+    } catch (err) {
+      res.status(500).send(err.message)
+   
+    }    
+});
+router.delete('/deleteNotification', verifyToken, celebrate({ [Segments.BODY]: deleteNotificationSchema }),  async (req, res) => {
+  try {     
+    const deletedNotification = await deleteNotification(req.body.id)
+    if (deletedNotification) return res.status(200).send({ ok: true })
+
+    return res.status(400).send('notification not found')
+    } catch (err) {
+      res.status(500).send(err.message)
+    }
+    
 });
 export default router
