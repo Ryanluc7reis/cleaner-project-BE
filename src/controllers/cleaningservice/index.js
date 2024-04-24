@@ -20,9 +20,11 @@ const router = Router();
 router.post('/createService',verifyToken, celebrate({ [Segments.BODY]: createServiceSchema }), async (req, res) => {
     try {     
         const newService = await createService(req.body, req.fullName)
-        res.status(201).send(newService)
+        if (newService) return res.status(201).send(newService)
+
+        return res.status(400).send('service not created')
       } catch (err) {
-        res.status(400).send(err.message)
+        res.status(500).send(err.message)
      
       }
       
@@ -30,9 +32,11 @@ router.post('/createService',verifyToken, celebrate({ [Segments.BODY]: createSer
 router.post('/createServiceAccepted',verifyToken, celebrate({ [Segments.BODY]: createServiceAcceptedSchema }), async (req, res) => {
   try {     
       const newServiceAccepted = await createServiceAccepted(req.body, req.fullName)
-      res.status(201).send(newServiceAccepted)
+      if (newServiceAccepted) return res.status(201).send(newServiceAccepted)
+
+      return res.status(400).send('service not created')
     } catch (err) {
-      res.status(400).send(err.message)
+      res.status(500).send(err.message)
    
     }
    
@@ -40,9 +44,11 @@ router.post('/createServiceAccepted',verifyToken, celebrate({ [Segments.BODY]: c
 router.get('/getServiceAccepted-cleaner', verifyToken,  async (req, res) => {
   try {     
       const service = await getServicesCleanerAccepteds(req.fullName)
-      res.status(200).send(service)
+      if (service) return res.status(200).send(service)
+
+     return res.status(400).send('service not found')
     } catch (err) {
-      res.status(400).send({message: 'Serviço não encontrado'})
+      res.status(500).send(err.message)
    
     }
     
@@ -50,9 +56,11 @@ router.get('/getServiceAccepted-cleaner', verifyToken,  async (req, res) => {
 router.get('/getServiceAccepted-user', verifyToken,  async (req, res) => {
   try {     
       const service = await getServicesUserAccepteds(req.fullName)
-      res.status(200).send(service)
+      if (service) return res.status(200).send(service)
+
+     return res.status(400).send('service not found')
     } catch (err) {
-      res.status(400).send({message: 'Serviço não encontrado'})
+      res.status(500).send(err.message)
    
     }
     
@@ -60,9 +68,11 @@ router.get('/getServiceAccepted-user', verifyToken,  async (req, res) => {
 router.get('/getService-cleaner', verifyToken,  async (req, res) => {
   try {     
       const service = await getServicesCleaner(req.fullName)
-      res.status(200).send(service)
+      if (service) return res.status(200).send(service)
+
+      return res.status(400).send('service not found')
     } catch (err) {
-      res.status(400).send({message: 'Serviço não encontrado'})
+      res.status(500).send(err.message)
    
     }
     
@@ -70,9 +80,11 @@ router.get('/getService-cleaner', verifyToken,  async (req, res) => {
 router.get('/getService-user', verifyToken,  async (req, res) => {
   try {     
       const service = await getServicesUser(req.fullName)
-      res.status(200).send(service)
+      if (service) return res.status(200).send(service)
+
+      return res.status(400).send('service not found')
     } catch (err) {
-      res.status(400).send({message: 'Serviço não encontrado'})
+      res.status(500).send(err.message)
    
     }
     
