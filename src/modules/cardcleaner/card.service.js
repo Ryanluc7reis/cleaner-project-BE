@@ -29,8 +29,8 @@ export const getOneCard = async (body) => {
   });
 };
 
-export const getCards = async (limit = 10) => {
-  return await Card.find().limit(limit)
+export const getCards = async () => {
+  return await Card.find()
 }
 export const editCard = async (body, user) => {
   return await Card.findOneAndUpdate({
