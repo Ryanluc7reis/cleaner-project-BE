@@ -50,7 +50,7 @@ export const createServiceAccepted = async (body) => {
   }
 }
 
-export const getServicesCleaner = async (fullName,limit = 10) => {
+export const getServicesCleaner = async (fullName) => {
   try {
     const cleaner = await Service.findOne(
       {
@@ -68,7 +68,7 @@ export const getServicesCleaner = async (fullName,limit = 10) => {
         cleaner: fullName,
         stateService: 'pending'
       }
-    ).sort({ createdDate: -1 }).limit(limit)
+    ).sort({ createdDate: -1 })
        if (!services ) {
       throw new Error('nenhum serviço não encontrado');
     }
@@ -78,7 +78,7 @@ export const getServicesCleaner = async (fullName,limit = 10) => {
     throw err
   }
 }
-export const getServicesUser = async (fullName,limit = 10) => {
+export const getServicesUser = async (fullName) => {
   try {
     const user = await Service.findOne(
       {
@@ -96,7 +96,7 @@ export const getServicesUser = async (fullName,limit = 10) => {
         requester: fullName ,
         stateService: 'pending'
       }
-    ).sort({ createdDate: -1 }).limit(limit)
+    ).sort({ createdDate: -1 })
     if (!service ) {
       throw new Error('nenhum serviço não encontrado');
     }
@@ -107,7 +107,7 @@ export const getServicesUser = async (fullName,limit = 10) => {
   }
  
 }
-export const getServicesCleanerAccepteds = async (fullName,limit = 10) => {
+export const getServicesCleanerAccepteds = async (fullName) => {
   try {
     const cleaner = await Service.findOne(
       {
@@ -125,7 +125,7 @@ export const getServicesCleanerAccepteds = async (fullName,limit = 10) => {
         cleaner: fullName ,
         stateService: 'accepted'
       }
-    ).sort({ createdDate: -1 }).limit(limit)
+    ).sort({ createdDate: -1 })
     if (!services ) {
       throw new Error('nenhum serviço não encontrado');
     }
@@ -135,7 +135,7 @@ export const getServicesCleanerAccepteds = async (fullName,limit = 10) => {
     throw err
   }
 }
-export const getServicesUserAccepteds = async (fullName, limit= 10) => {
+export const getServicesUserAccepteds = async (fullName) => {
   try {
      const user = await Service.findOne(
        {
@@ -152,7 +152,7 @@ export const getServicesUserAccepteds = async (fullName, limit= 10) => {
         requester: fullName ,
         stateService: 'accepted'
       }
-    ).sort({ createdDate: -1 }).limit(limit)
+    ).sort({ createdDate: -1 })
     if (!services ) {
       throw new Error('nenhum serviço não encontrado');
     } 

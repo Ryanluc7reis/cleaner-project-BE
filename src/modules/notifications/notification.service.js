@@ -8,7 +8,7 @@ export const createNotification = async (body) => {
   
   })
 }
-export const getNotifications = async (fullName, limit = 10) => {
+export const getNotifications = async (fullName) => {
   try {
     const user = await Notification.findOne(
       {
@@ -18,7 +18,7 @@ export const getNotifications = async (fullName, limit = 10) => {
     if ( fullName && fullName !== user.for) {
       throw new Error('user not found')
     } 
-    const notifications = await Notification.find({ for: fullName }).sort({ createdDate: -1 }).limit(limit)
+    const notifications = await Notification.find({ for: fullName }).sort({ createdDate: -1 })
        if (!notifications ) {
       throw new Error('nenhuma notification encontrada');
     }
