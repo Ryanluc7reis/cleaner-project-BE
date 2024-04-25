@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { celebrate, Segments } from 'celebrate';
 
-import { createHistoric } from '../../modules/historic/historic.service';
+import { createHistoric, getHistorics } from '../../modules/historic/historic.service';
 import { createHistoricSchema } from '../../modules/historic/historic.schema';
 import { verifyToken } from '../../../utils/auth';
 
@@ -18,6 +18,17 @@ router.post('/createHistoric', verifyToken, celebrate({ [Segments.BODY]: createH
         res.status(500).send(err.message)
      
       }    
+});
+router.get('/getHistorics', verifyToken,  async (req, res) => {
+  try {     
+      const historics = await getHistorics(req.fullName)
+      if (historics) return res.status(200).send(historics)
+
+      return res.status(400).send('historics not found')
+    } catch (err) {
+      res.status(500).send(err.message)
+   
+    }    
 });
 
 router.use((err, req, res, next) => {

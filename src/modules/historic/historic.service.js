@@ -1,5 +1,5 @@
 import Historic from './historic.model'
-import User from '../user/user.model'
+
 
 export const createHistoric = async (body) => {
   return await Historic.create({   
@@ -9,3 +9,24 @@ export const createHistoric = async (body) => {
   
   })
 }
+export const getHistorics = async (fullName) => {
+  try {
+    const user = await Historic.findOne(
+      {
+        for: fullName 
+      }
+    )
+    if ( fullName && fullName !== user.for) {
+      throw new Error('user not found')
+    } 
+    const historics = await Historic.find({ for: fullName }).sort({ createdDate: -1 })
+       if (!historics ) {
+      throw new Error('nenhuma historico encontrada');
+    }
+     return historics
+    
+  } catch (err) {
+    throw err
+  }
+}
+

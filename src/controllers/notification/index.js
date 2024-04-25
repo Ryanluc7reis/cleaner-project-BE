@@ -24,7 +24,7 @@ router.get('/getNotifications', verifyToken,  async (req, res) => {
       const notifications = await getNotifications(req.fullName)
       if (notifications) return res.status(200).send(notifications)
 
-      return res.status(400).send('notification not created')
+      return res.status(400).send('notification not found')
     } catch (err) {
       res.status(500).send(err.message)
    
