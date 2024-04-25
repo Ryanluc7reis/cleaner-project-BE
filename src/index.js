@@ -15,6 +15,7 @@ import CardCleaner from './controllers/card/index.js'
 import IndexUser from './controllers/user/index.js'
 import IndexCleaningService from './controllers/cleaningservice/index.js'
 import IndexNotification from './controllers/notification/index.js'
+import IndexHistoric from './controllers/historic/index.js'
 
 const MONGO_URI = process.env.MONGODB_URI
 
@@ -50,5 +51,6 @@ app.use('/user', VerifyCleaner);
 app.use('/user', IndexUser);
 app.use( IndexCleaningService);
 app.use(IndexNotification)
+app.use(IndexHistoric)
 
 app.listen(port, () => console.log(`App rodando em http://localhost:${port}`));
