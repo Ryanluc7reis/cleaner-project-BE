@@ -1,8 +1,8 @@
 import { Router } from 'express';
 import { celebrate, Segments } from 'celebrate';
 
-import { createHistoric, getHistorics } from '../../modules/historic/historic.service';
-import { createHistoricSchema } from '../../modules/historic/historic.schema';
+import { createHistoric, getHistorics, cleanHistoric } from '../../modules/historic/historic.service';
+import { createHistoricSchema, cleanHistoricSchema } from '../../modules/historic/historic.schema';
 import { verifyToken } from '../../../utils/auth';
 
 
@@ -30,7 +30,19 @@ router.get('/getHistorics', verifyToken,  async (req, res) => {
    
     }    
 });
-
+router.delete('/cleanHistoric', verifyToken, celebrate({ [Segments.BODY]: cleanHistoricSchema }), async (req, res) => {
+  try {     
+    const { ids } = req.body;
+    const cleanHistoricResult = await cleanHistoric(ids);
+    if (cleanHistoricResult.deletedCount > 0) {
+      return res.status(200).send({ ok: true });
+    } else {
+      return res.status(400).send('No historics found for the given IDs');
+    }
+  } catch (err) {
+    res.status(500).send(err.message);
+  }  
+});
 router.use((err, req, res, next) => {
     if (err.joi) {
       return res.status(400).json({
