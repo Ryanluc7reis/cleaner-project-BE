@@ -29,4 +29,9 @@ export const getHistorics = async (fullName) => {
     throw err
   }
 }
+export const cleanHistoric = async (ids) => {
+  return await Historic.deleteMany({
+    _id: { $in: ids }
+  });
+};
 

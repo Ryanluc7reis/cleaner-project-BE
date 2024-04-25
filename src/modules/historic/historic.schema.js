@@ -8,4 +8,6 @@ export const createHistoricSchema = Joi.object({
     historicType: Joi.string().required(),
    
   })
-
+  export const cleanHistoricSchema = Joi.object({
+    ids: Joi.array().items(Joi.objectId()).min(1).required()
+  });
