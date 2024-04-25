@@ -41,4 +41,14 @@ router.delete('/deleteNotification', verifyToken, celebrate({ [Segments.BODY]: d
     }
     
 });
+router.use((err, req, res, next) => {
+  if (err.joi) {
+    return res.status(400).json({
+      error: 'Erro de validação',
+      details: err.joi.details.map(detail => detail.message)
+    });
+  }
+  console.error(err);
+  res.status(500).send('Erro interno do servidor');
+});
 export default router

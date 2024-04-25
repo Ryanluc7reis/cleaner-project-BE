@@ -141,8 +141,7 @@ export const getServicesUserAccepteds = async (fullName, limit= 10) => {
        {
          requester: fullName,
          stateService: 'accepted'
-       }
-     )
+       })
      if ( fullName && fullName !== user.requester) {
        throw new Error('user not found')
      } 
