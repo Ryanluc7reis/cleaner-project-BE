@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { celebrate, Segments } from 'celebrate';
 
-import { createNotification, getNotifications, deleteNotification } from '../../modules/notifications/notification.service';
+import { createNotification, getNotifications, deleteNotification, getNotificationsCount } from '../../modules/notifications/notification.service';
 import { createNotificationSchema, deleteNotificationSchema } from '../../modules/notifications/notification.schema';
 import { verifyToken } from '../../../utils/auth';
 
@@ -24,6 +24,17 @@ router.get('/getNotifications', verifyToken,  async (req, res) => {
       const notifications = await getNotifications(req.fullName)
       if (notifications) return res.status(200).send(notifications)
 
+      return res.status(400).send('notification not found')
+    } catch (err) {
+      res.status(500).send(err.message)
+   
+    }    
+});
+router.get('/getNotificationsCount', verifyToken,  async (req, res) => {
+  try {     
+      const notifications = await getNotificationsCount(req.fullName)
+      if (notifications) return res.status(200).json({ count: notifications })
+      
       return res.status(400).send('notification not found')
     } catch (err) {
       res.status(500).send(err.message)
