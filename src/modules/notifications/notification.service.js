@@ -4,7 +4,8 @@ export const createNotification = async (body) => {
   return await Notification.create({   
     for: body.for,
     notificationType: body.notificationType,
-    createdDate: new Date()
+    createdDate: new Date(),
+    read: false
   
   })
 }
@@ -28,8 +29,51 @@ export const getNotifications = async (fullName) => {
     throw err
   }
 }
+export const getNotificationsCount  = async (fullName) => {
+  try{
+    const user = await Notification.findOne(
+      {
+        for: fullName 
+      }
+    )
+    if (fullName && fullName !== user.for) {
+      throw new Error('user not found')
+    } 
+
+    const notificationsCount = await Notification.countDocuments({ for: fullName, read: false });
+    if (!notificationsCount ) {
+      throw new Error('nenhuma notification encontrada');
+  }
+    return notificationsCount;
+  } catch(err) {
+    throw err
+  }
+}
+export const editAllNotificationsAsRead = async (fullName) => {
+  try {
+    const user = await Notification.findOne(
+      {
+        for: fullName 
+      }
+    )
+    if (fullName && fullName !== user.for) {
+      throw new Error('user not found')
+    } 
+    
+    const result = await Notification.updateMany({ for: fullName }, { read: true });
+
+    if (result.nModified === 0 ) {
+      throw new Error('Nenhuma notificação encontrada para atualizar');
+    }
+
+    return result;
+  } catch (err) {
+    throw err;
+  }
+};
 export const deleteNotification = async (id) => {
   return await Notification.findOneAndDelete({
     _id: id
   })
 }
+
