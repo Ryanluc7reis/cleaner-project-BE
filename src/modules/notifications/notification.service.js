@@ -49,9 +49,31 @@ export const getNotificationsCount  = async (fullName) => {
     throw err
   }
 }
+export const editAllNotificationsAsRead = async (fullName) => {
+  try {
+    const user = await Notification.findOne(
+      {
+        for: fullName 
+      }
+    )
+    if (fullName && fullName !== user.for) {
+      throw new Error('user not found')
+    } 
+    
+    const result = await Notification.updateMany({ for: fullName }, { read: true });
 
+    if (result.nModified === 0 ) {
+      throw new Error('Nenhuma notificação encontrada para atualizar');
+    }
+
+    return result;
+  } catch (err) {
+    throw err;
+  }
+};
 export const deleteNotification = async (id) => {
   return await Notification.findOneAndDelete({
     _id: id
   })
 }
+

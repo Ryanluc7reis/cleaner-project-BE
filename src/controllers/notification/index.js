@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { celebrate, Segments } from 'celebrate';
 
-import { createNotification, getNotifications, deleteNotification, getNotificationsCount } from '../../modules/notifications/notification.service';
+import { createNotification, getNotifications, deleteNotification, getNotificationsCount, editAllNotificationsAsRead } from '../../modules/notifications/notification.service';
 import { createNotificationSchema, deleteNotificationSchema } from '../../modules/notifications/notification.schema';
 import { verifyToken } from '../../../utils/auth';
 
@@ -33,7 +33,7 @@ router.get('/getNotifications', verifyToken,  async (req, res) => {
 router.get('/getNotificationsCount', verifyToken,  async (req, res) => {
   try {     
       const notifications = await getNotificationsCount(req.fullName)
-      if (notifications) return res.status(200).json({ count: notifications })
+      if (notifications) return res.status(200).json({count: notifications})
       
       return res.status(400).send('notification not found')
     } catch (err) {
@@ -41,6 +41,15 @@ router.get('/getNotificationsCount', verifyToken,  async (req, res) => {
    
     }    
 });
+router.get('/notificationsAsRead', verifyToken, async (req, res) => {
+  try {
+    const result = await editAllNotificationsAsRead(req.fullName);
+    res.status(200).json({ message: 'Todas as notificações foram marcadas como lidas', result });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 router.delete('/deleteNotification', verifyToken, celebrate({ [Segments.BODY]: deleteNotificationSchema }),  async (req, res) => {
   try {     
     const deletedNotification = await deleteNotification(req.body.id)
