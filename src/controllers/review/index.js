@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { celebrate, Segments } from 'celebrate';
 
-import { createReview } from '../../modules/reviewcleaner/review.service';
+import { createReview, getReviews } from '../../modules/reviewcleaner/review.service';
 import { createReviewSchema} from '../../modules/reviewcleaner/review.schema';
 import { verifyToken } from '../../../utils/auth';
 
@@ -14,6 +14,17 @@ router.post('/createReview',verifyToken, celebrate({ [Segments.BODY]: createRevi
         if (newReview) return res.status(201).send(newReview)
 
         return res.status(400).send('review not created')
+      } catch (err) {
+        res.status(500).send(err.message)
+     
+      }    
+});
+router.post('/getReviews', async (req, res) => {
+    try {     
+        const reviews = await getReviews(req.body)
+        if (reviews) return res.status(200).send(reviews)
+
+        return res.status(400).send('reviews not found')
       } catch (err) {
         res.status(500).send(err.message)
      
