@@ -26,4 +26,11 @@ export const createCardSchema = Joi.object({
     cleaning2:  Joi.string().required(),
     cleaning3:  Joi.string().required()
   })
+  export const editRatingCardSchema = Joi.object({
+    id: Joi.objectId().required(),
+    rating: Joi.number().required(),
+    creator: Joi.string().required()
+
+  })
+ 
  
