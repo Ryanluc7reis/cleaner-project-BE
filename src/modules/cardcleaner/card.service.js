@@ -24,7 +24,8 @@ export const getOneCard = async (body) => {
   return await Card.findOne({
     $or: [
       { _id: body.id },
-      { _id: body.cardId }
+      { _id: body.cardId },
+      {creator: body.cleaner}
     ]
   });
 };
@@ -47,6 +48,18 @@ export const editCard = async (body, user) => {
     cleaning: body.cleaning,
     cleaning2: body.cleaning2,
     cleaning3: body.cleaning3,
+  },{
+    new: true 
+  })
+}
+export const editRatingCard = async (body, user) => {
+  return await Card.findOneAndUpdate({
+    _id: body.id,
+    creator: body.creator
+
+  },{
+    rating: body.rating,
+    
   },{
     new: true 
   })
