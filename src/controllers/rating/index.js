@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { celebrate, Segments } from 'celebrate';
 
-import { createRating  } from '../../modules/ratingcleaner/rating.service';
+import { createRating, getRatings } from '../../modules/ratingcleaner/rating.service';
 import { createRatingSchema} from '../../modules/ratingcleaner/rating.schema';
 import { verifyToken } from '../../../utils/auth';
 
@@ -19,7 +19,17 @@ router.post('/createRating', verifyToken, celebrate({ [Segments.BODY]: createRat
      
       }    
 });
+router.post('/getRatings', async (req, res) => {
+  try {     
+      const ratings = await getRatings(req.body)
+      if (ratings) return res.status(200).send(ratings)
 
+      return res.status(400).send('ratings not found')
+    } catch (err) {
+      res.status(500).send(err.message)
+   
+    }    
+});
 router.use((err, req, res, next) => {
     if (err.joi) {
       return res.status(400).json({
