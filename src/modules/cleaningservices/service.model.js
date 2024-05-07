@@ -11,7 +11,8 @@ const ServiceSchema = new mongoose.Schema({
     number: { type: String, required: true },
     requester: { type: String, required: true },
     cleaner: { type: String, required: true },
-    stateService: { type: String, required: true }
+    stateService: { type: String, required: true },
+    cleaningType: { type: String, required: true }
 });
 
 export default mongoose.models.Service || mongoose.model('Service', ServiceSchema);

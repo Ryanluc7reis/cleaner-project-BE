@@ -11,6 +11,7 @@ export const createServiceSchema = Joi.object({
     number: Joi.string().pattern(/^(?:(?:\+|00)?(55)\s?)?(?:\(?([0-9]{2})\)?\s?)??(?:((?:9\d|[2-9])\d{3})\-?(\d{4}))$/).required(),
     serviceDate: Joi.string().required(),
     cleaner: Joi.string().required(),
+    cleaningType: Joi.string().required()
 });
 export const createServiceAcceptedSchema = Joi.object({
     plan: Joi.string().required().max(25),
@@ -22,6 +23,7 @@ export const createServiceAcceptedSchema = Joi.object({
     number: Joi.string().pattern(/^(?:(?:\+|00)?(55)\s?)?(?:\(?([0-9]{2})\)?\s?)??(?:((?:9\d|[2-9])\d{3})\-?(\d{4}))$/).required(),
     serviceDate: Joi.string().required(),
     cleaner: Joi.string().required(),
+    cleaningType: Joi.string().required()
 });
 export const deleteServiceSchema = Joi.object({
     id: Joi.objectId().required()

@@ -18,7 +18,8 @@ export const createService = async (body, fullName) => {
       number: body.number,
       requester: fullName,
       cleaner: body.cleaner,
-      stateService: 'pending'
+      stateService: 'pending',
+      cleaningType: body.cleaningType
     })
     return service
   } catch (err){
@@ -42,7 +43,8 @@ export const createServiceAccepted = async (body) => {
       number: body.number,
       requester: body.requester,
       cleaner: body.cleaner,
-      stateService: 'accepted'
+      stateService: 'accepted',
+      cleaningType: body.cleaningType
     })
     return service
   } catch (err){
