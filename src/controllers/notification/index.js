@@ -8,7 +8,6 @@ import {
   getNotificationsCount,
   editAllNotificationsAsRead,
   createNotificationToRating,
-  getNotificationsCountToRating,
   getOneNotificationRating
      } from '../../modules/notifications/notification.service';
 import { createNotificationSchema, deleteNotificationSchema, createNotificationRatingSchema } from '../../modules/notifications/notification.schema';
