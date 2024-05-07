@@ -52,7 +52,18 @@ export const editCard = async (body, user) => {
     new: true 
   })
 }
-export const editRatingCard = async (body, user) => {
+export const editamountCleaningCard = async (body) => {
+  return await Card.findOneAndUpdate({
+    _id: body.id,
+    creator: body.creator
+
+  },{
+    amountCleaning: body.amountCleaning,
+  },{
+    new: true 
+  })
+}
+export const editRatingCard = async (body) => {
   return await Card.findOneAndUpdate({
     _id: body.id,
     creator: body.creator
