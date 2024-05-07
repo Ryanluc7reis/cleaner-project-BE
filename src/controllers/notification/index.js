@@ -1,8 +1,17 @@
 import { Router } from 'express';
 import { celebrate, Segments } from 'celebrate';
 
-import { createNotification, getNotifications, deleteNotification, getNotificationsCount, editAllNotificationsAsRead } from '../../modules/notifications/notification.service';
-import { createNotificationSchema, deleteNotificationSchema } from '../../modules/notifications/notification.schema';
+import { 
+  createNotification,
+  getNotifications,
+  deleteNotification,
+  getNotificationsCount,
+  editAllNotificationsAsRead,
+  createNotificationToRating,
+  getNotificationsCountToRating,
+  getOneNotificationRating
+     } from '../../modules/notifications/notification.service';
+import { createNotificationSchema, deleteNotificationSchema, createNotificationRatingSchema } from '../../modules/notifications/notification.schema';
 import { verifyToken } from '../../../utils/auth';
 
 
@@ -19,6 +28,17 @@ router.post('/createNotification',verifyToken, celebrate({ [Segments.BODY]: crea
      
       }    
 });
+router.post('/createNotificationToRating',verifyToken, celebrate({ [Segments.BODY]: createNotificationRatingSchema }), async (req, res) => {
+  try {     
+      const newNotification = await createNotificationToRating(req.body, req.fullName)
+      if (newNotification) return res.status(201).send(newNotification)
+
+      return res.status(400).send('service not created')
+    } catch (err) {
+      res.status(500).send(err.message)
+   
+    }    
+});
 router.get('/getNotifications', verifyToken,  async (req, res) => {
   try {     
       const notifications = await getNotifications(req.fullName)
@@ -30,6 +50,18 @@ router.get('/getNotifications', verifyToken,  async (req, res) => {
    
     }    
 });
+router.get('/getOneNotificationRating', verifyToken,  async (req, res) => {
+  try {     
+      const notifications = await getOneNotificationRating(req.fullName)
+      if (notifications) return res.status(200).send(notifications)
+
+      return res.status(400).send('notification not found')
+    } catch (err) {
+      res.status(500).send(err.message)
+   
+    }    
+});
+
 router.get('/getNotificationsCount', verifyToken,  async (req, res) => {
   try {     
       const notifications = await getNotificationsCount(req.fullName)
