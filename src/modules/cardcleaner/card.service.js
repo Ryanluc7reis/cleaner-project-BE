@@ -12,7 +12,9 @@ export const createCard = async (body, user) => {
     cleaning: body.cleaning,
     cleaning2: body.cleaning2,
     cleaning3: body.cleaning3,
-    creator: user
+    creator: user,
+    scheduleBlocked: false,
+    availableDate: '-'
   })
 }
 export const findOneCard = async (user) => {
@@ -30,9 +32,35 @@ export const getOneCard = async (body) => {
   });
 };
 
-export const getCards = async () => {
-  return await Card.find()
-}
+export const getCards = async (body) => {
+  try {
+    let dateString; 
+
+    if (body.date !== undefined && body.date !== null) {
+      dateString = body.date.toString();
+    } else {
+      throw new Error('body.date não é uma string');
+    }
+
+    const card = await Card.findOne({
+      scheduleBlocked: false,
+      availableDate: { $regex: dateString }
+    });
+
+    if (!card) {
+      throw new Error('card not found');
+    }
+  
+    const cards = await Card.find({ scheduleBlocked: false,  availableDate: { $regex: dateString }});
+    if (!cards){
+      throw new Error('nenhum card encontrado');
+    }
+    return cards;
+  } catch (err){
+    throw err;
+  }
+};
+
 export const editCard = async (body, user) => {
   return await Card.findOneAndUpdate({
     _id: body.id,
@@ -74,4 +102,60 @@ export const editRatingCard = async (body) => {
   },{
     new: true 
   })
+}
+export const editScheduleCleaner = async (user, body) => {
+  try{
+    const dateCurrent = await Card.findOne({ creator: user });
+  
+    if (!dateCurrent) {
+      throw new Error('card não encontrado');
+    }
+    if (body.availableDate && body.availableDate !== dateCurrent.availableDate) {
+      
+      body.availableDate 
+    } else {
+    
+      body.availableDate= dateCurrent.availableDate
+    }
+
+    const card = await Card.findOneAndUpdate({
+      creator: user
+  
+    },{
+      scheduleBlocked: body.scheduleBlocked,
+      availableDate: body.availableDate
+      
+    },{
+      new: true 
+    })
+    return card
+  }
+  catch (err){
+    throw err
+  }
+  
+}
+export const editScheduleBlockedCleaner = async (user, body) => {
+  try{
+    const dateCurrent = await Card.findOne({ creator: user });
+  
+    if (!dateCurrent) {
+      throw new Error('card não encontrado');
+    }
+
+    const card = await Card.findOneAndUpdate({
+      creator: user
+  
+    },{
+      scheduleBlocked: body.scheduleBlocked
+      
+    },{
+      new: true 
+    })
+    return card
+  }
+  catch (err){
+    throw err
+  }
+  
 }
