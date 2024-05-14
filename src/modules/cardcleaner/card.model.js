@@ -12,7 +12,9 @@ const CardSchema = new mongoose.Schema({
     cleaning: { type: String, required: true },
     cleaning2: { type: String, required: true },
     cleaning3: { type: String, required: true },
-    creator: { type: String, required: true }
+    creator: { type: String, required: true },
+    scheduleBlocked: { type: Boolean, default: false },
+    availableDate : { type: [String], required: true }
 });
 
 export default mongoose.models.Card || mongoose.model('Card', CardSchema);
