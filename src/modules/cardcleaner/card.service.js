@@ -44,14 +44,17 @@ export const getCards = async (body) => {
 
     const card = await Card.findOne({
       scheduleBlocked: false,
-      availableDate: { $regex: dateString }
+      $or : [{availableDate: { $regex: dateString }}, { availableDate : '-' }]
     });
 
     if (!card) {
       throw new Error('card not found');
     }
   
-    const cards = await Card.find({ scheduleBlocked: false,  availableDate: { $regex: dateString }});
+    const cards = await Card.find(
+      { 
+        scheduleBlocked: false,
+         $or : [{availableDate: { $regex: dateString }}, { availableDate : '-' }] });
     if (!cards){
       throw new Error('nenhum card encontrado');
     }
