@@ -1,8 +1,25 @@
 import { Router } from 'express';
 import { celebrate, Segments } from 'celebrate';
 
-import { createCard, findOneCard, getCards, getOneCard, editCard, editRatingCard } from '../../modules/cardcleaner/card.service';
-import { createCardSchema, editCardSchema , editRatingCardSchema} from '../../modules/cardcleaner/card.schema';
+import { 
+  createCard,
+  findOneCard,
+  getCards,
+  getOneCard,
+  editCard,
+  editRatingCard,
+  editamountCleaningCard,
+  editScheduleCleaner,
+  editScheduleBlockedCleaner 
+} from '../../modules/cardcleaner/card.service';
+import { 
+  createCardSchema,
+  editCardSchema,
+  editRatingCardSchema,
+  editamountCleaningCardSchema,
+  editScheduleCleanerSchema,
+  editScheduleBlockedSchema
+} from '../../modules/cardcleaner/card.schema';
 import { verifyToken } from '../../../utils/auth';
 
 
@@ -32,7 +49,41 @@ router.patch('/editCard',verifyToken, celebrate({ [Segments.BODY]: editCardSchem
 router.patch('/editRatingCard',verifyToken, celebrate({ [Segments.BODY]: editRatingCardSchema }), async (req, res) => {
   try {
     
-    const refreshCard = await editRatingCard(req.body, req.user)
+    const refreshCard = await editRatingCard(req.body)
+    if (refreshCard) return res.status(200).send(refreshCard)
+
+    return res.status(400).send('card not found')
+  } catch (err) {
+    return res.status(500).send(err.message)
+  }
+})
+router.patch('/editamountCleaningCard',verifyToken, celebrate({ [Segments.BODY]: editamountCleaningCardSchema }), async (req, res) => {
+  try {
+    
+    const refreshCard = await editamountCleaningCard(req.body)
+    if (refreshCard) return res.status(200).send(refreshCard)
+
+    return res.status(400).send('card not found')
+  } catch (err) {
+    return res.status(500).send(err.message)
+  }
+})
+router.patch('/editScheduleCleaner',verifyToken, celebrate({ [Segments.BODY]: editScheduleCleanerSchema }), async (req, res) => {
+  try {
+    
+    const refreshCard = await editScheduleCleaner(req.user, req.body)
+    if (refreshCard) return res.status(200).send(refreshCard)
+
+    return res.status(400).send('card not found')
+  } catch (err) {
+    return res.status(500).send(err.message)
+  }
+})
+
+router.patch('/editScheduleBlockedCleaner',verifyToken, celebrate({ [Segments.BODY]: editScheduleBlockedSchema }), async (req, res) => {
+  try {
+    
+    const refreshCard = await editScheduleBlockedCleaner(req.user, req.body)
     if (refreshCard) return res.status(200).send(refreshCard)
 
     return res.status(400).send('card not found')
@@ -57,9 +108,9 @@ router.get('/getOneCard', async (req, res) => {
   }
 });
 
-router.get('/getCards', async (req, res) => {
+router.post('/getCards', async (req, res) => {
   try {
-    const cards = await getCards(req.region)
+    const cards = await getCards(req.body)
     res.status(200).send(cards)
   } catch (err) {
     return res.status(500).send(err.message)

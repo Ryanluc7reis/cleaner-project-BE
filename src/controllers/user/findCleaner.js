@@ -8,7 +8,7 @@ const userVerify = Router();
 
 userVerify.get('/verify-cleaner', verifyToken, async (req, res) => {
   try { 
-    const cleaner = await findCleaner(req.user)
+    const cleaner = await findCleaner(req.user, req.fullName)
     if (cleaner) return res.status(200).send({ ok: 'cleaner encontrado' })
 
         return res.status(400).send({ error: 'not found cleaner' })

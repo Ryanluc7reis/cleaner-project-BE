@@ -32,5 +32,19 @@ export const createCardSchema = Joi.object({
     creator: Joi.string().required()
 
   })
+  export const editamountCleaningCardSchema = Joi.object({
+    id: Joi.objectId().required(),
+    amountCleaning: Joi.number().required(),
+    creator: Joi.string().required()
+
+  })
+  export const editScheduleCleanerSchema = Joi.object({
+    scheduleBlocked: Joi.string().required(),
+    availableDate:  Joi.string().required()
+  })
+  export const editScheduleBlockedSchema = Joi.object({
+    scheduleBlocked: Joi.string().required()
+  
+  })
  
  
