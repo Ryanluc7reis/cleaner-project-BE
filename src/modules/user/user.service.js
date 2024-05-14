@@ -52,10 +52,10 @@ export const signupCleaner = async (body) => {
       throw err
     }
   }
-  export const findCleaner = async (user) => {
+  export const findCleaner = async (user, fullName) => {
     try {
-      const userDB = await User.findOne({
-        user: user,
+      const userDB = await User.findOne({      
+        $or: [{ user: user }, { fullName: fullName }],
         userType: 'cleaner'
       })
       if(!userDB) throw new Error('not found cleaner')
