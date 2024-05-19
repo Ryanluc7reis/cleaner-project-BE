@@ -6,9 +6,8 @@ dotenv.config();
 const AUTH_SECRET = process.env.SESSION_PASSWORD;
 const AUTH_NAME = process.env.SESSION_TOKEN_NAME;
 
-
 export const generateAccessToken = (data) => {
-  const token = sign(data, AUTH_SECRET, { expiresIn: 300});
+  const token = sign(data, AUTH_SECRET, { expiresIn: 86400 });
   return token;
 };
 
