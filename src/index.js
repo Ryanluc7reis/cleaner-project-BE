@@ -33,7 +33,7 @@ mongoose.connect(MONGO_URI, {
 });
 
 const app = express();
-const port = process.env.PORT || 3333;
+const port = process.env.PORT || 4444;
 
 app.use(express.json());
 app.use(cors({
