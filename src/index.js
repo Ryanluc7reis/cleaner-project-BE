@@ -39,7 +39,11 @@ const corsConfig = {
   credentials: true,
   methods: ["GET", "POST", "DELETE", "PUT", "PATCH"],
 }
-app.options("", cors(corsConfig))
+app.use((req, res, next) => {
+  res.removeHeader("Permissions-Policy");
+
+  next();
+});
 app.use(cors(corsConfig));
 
 app.use(express.json());
