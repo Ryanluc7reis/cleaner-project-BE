@@ -20,6 +20,7 @@ import IndexReview from './controllers/review/index.js'
 import IndexRating from './controllers/rating/index.js'
 
 const MONGO_URI = process.env.MONGODB_URI
+const AUTH_NAME = process.env.SESSION_TOKEN_NAME
 
 mongoose.connect(MONGO_URI, {
   useUnifiedTopology: true,
@@ -35,9 +36,10 @@ mongoose.connect(MONGO_URI, {
 const app = express();
 const port = process.env.PORT || 4444;
 const corsConfig = {
-  origin: '*',
+  origin: 'https://cleaner-project24.vercel.app',
   credentials: true,
-  methods: ["GET", "POST", "DELETE", "PUT", "PATCH"]
+  methods: ["GET", "POST", "DELETE", "PUT", "PATCH"],
+  allowedHeaders: AUTH_NAME
 }
 app.options("", cors(corsConfig))
 app.use(cors(corsConfig));
