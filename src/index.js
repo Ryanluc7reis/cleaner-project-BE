@@ -36,10 +36,8 @@ mongoose.connect(MONGO_URI, {
 const app = express();
 const port = process.env.PORT || 4444;
 const corsConfig = {
-  origin: 'https://cleaner-project24.vercel.app',
   credentials: true,
   methods: ["GET", "POST", "DELETE", "PUT", "PATCH"],
-  allowedHeaders: AUTH_NAME
 }
 app.options("", cors(corsConfig))
 app.use(cors(corsConfig));
