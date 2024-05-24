@@ -36,11 +36,13 @@ mongoose.connect(MONGO_URI, {
 const app = express();
 const port = process.env.PORT || 4444;
 const corsConfig = {
-  origin:'*',
+  origin: '*',
   credentials: true,
+  methods: ["GET", "POST", "DELETE", "PUT", "PATCH"]
 }
 
 app.use(cors(corsConfig));
+
 app.use(express.json());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
