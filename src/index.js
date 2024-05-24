@@ -39,7 +39,7 @@ const corsConfig = {
   origin: '*',
   credentials: true,
   methods: ["GET", "POST", "DELETE", "PUT", "PATCH"],
-  allowedHeaders: ["Content-Type", "Authorization", AUTH_NAME]
+  allowedHeaders: ["Content-Type", "Authorization"]
 };
 app.use(cors(corsConfig));
 
