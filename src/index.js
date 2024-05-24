@@ -38,9 +38,9 @@ const port = process.env.PORT || 4444;
 const corsConfig = {
   origin: '*',
   credentials: true,
-  methods: ["GET", "POST", "DELETE", "PUT", "PATCH"]
-}
-
+  methods: ["GET", "POST", "DELETE", "PUT", "PATCH"],
+  allowedHeaders: ["Content-Type", "Authorization", AUTH_NAME]
+};
 app.use(cors(corsConfig));
 
 app.use(express.json());
