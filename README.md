@@ -30,14 +30,12 @@ Link do projeto no ar: [https://cleaner-project24.vercel.app/ ](https://cleaner-
 * Mongoose
 * Joi
 * Webpack
-* ### Front-end
+  
+  ### Front-end
 * ReactJs
 * Styled-components
 * NextJs
-## Implatação em produção
-* Back-end: Vercel
-* Front-end web: Vercel
-* Banco de dados: MongoDB
+
 ## Autor
 
 Ryan Lucas Ferreira Reis 
