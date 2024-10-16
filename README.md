@@ -6,7 +6,7 @@ A aplicação consiste em uma automação de agenda para  uma rede de faxineiros
 A aplicação fornece um sistema de dashboard , onde o cliente pode ter controle dos serviços pendentes e serviços aceitos , histórico dos serviços realizados , notificações e perfil da conta com os dados pessoais.
 No dashboard do faxineiro , além de ter todas essas funcionabilidades, ele pode controlar sua agenda definindo os dias disponíveis para serviço ou até mesmo bloqueando sua agenda. (Essa aplicação é adaptada para mobile!!)
 
-A aplicação foi desenvolvida em ambientes diferentes, aqui está o [repositório front-end](https://github.com/Ryanluc7reis/cleaner-project24)
+Front-end -> [repositório front-end](https://github.com/Ryanluc7reis/cleaner-project24)
 
 Link do projeto no ar: [https://cleaner-project24.vercel.app/ ](https://cleaner-project24.vercel.app/)
 
