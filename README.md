@@ -44,7 +44,7 @@ Ryan Lucas Ferreira Reis
 
 Linkedin : https://www.linkedin.com/in/ryanluc7reis/
 
-E-mail : ryan.dev18@outlook.com
+E-mail : ryanluc.dev18@gmail.com
 
 Portfolio: https://portifolio-ryan.vercel.app/
 
