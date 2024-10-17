@@ -4,7 +4,7 @@ UpCleaner é uma aplicação web construída para resolver o problema de uma cli
 
 A aplicação consiste em uma automação de agenda para  uma rede de faxineiros , possibilitando o cliente agendar sua limpeza pelo sistema com algum faxineiro de sua preferência  e até mesmo avalia-lo pós serviço. 
 A aplicação fornece um sistema de dashboard , onde o cliente pode ter controle dos serviços pendentes e serviços aceitos , histórico dos serviços realizados , notificações e perfil da conta com os dados pessoais.
-No dashboard do faxineiro , além de ter todas essas funcionabilidades, ele pode controlar sua agenda definindo os dias disponíveis para serviço ou até mesmo bloqueando sua agenda. (Essa aplicação é adaptada para mobile!!)
+No dashboard do faxineiro , além de ter todas essas funcionabilidades, ele pode controlar sua agenda definindo os dias disponíveis para serviço ou até mesmo bloqueando sua agenda.
 
 Front-end -> [repositório front-end](https://github.com/Ryanluc7reis/cleaner-project24)
 
